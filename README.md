@@ -12,5 +12,5 @@
   (Department Name) (Course Number) - (Name of Document).  
   **NOTE - Any other file in the specified directory will be left untouched.** 
 ## Repository Structure
-- [`file-sort.sh`](https://github.com/adityaparmarr/organize-drive/file-sort.sh) - The main script to organize the files as required.
-- [`testing.sh`](https://github.com/adityaparmarr/organize-drive/testing.sh) - Create a folder with many files with diverse names to test the sorting on.
+- [`file-sort.sh`](https://github.com/adityaparmarr/organize-drive/blob/main/file-sort.sh) - The main script to organize the files as required.
+- [`testing.sh`](https://github.com/adityaparmarr/organize-drive/blob/main/testing.sh) - Create a folder with files with diverse names to test the sorting on.
