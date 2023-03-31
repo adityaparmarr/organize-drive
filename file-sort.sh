@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # Check if any files exist in the current directory (excluding hidden files)
 # using find and limiting to depth 1 and excluding hidden and only files
 
@@ -32,6 +32,7 @@ then
         echo foldername = $foldername
 
         # Reconstruct the file name
+        # TODO - account for multiple files of the same course
         filename=`find $p -type f -iname "$deptname*" `
         echo filename = $filename
         echo p/foldername = $p/$foldername
