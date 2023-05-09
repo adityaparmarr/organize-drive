@@ -20,42 +20,43 @@ then
     echo "YES unsorted files"
     # Loop through all the FILES 
     for file in $FILES; do
+        echo $file
         # get the last dash in the path (avoiding the ones in the parent dir)
         dashindex=`echo $file | tr -cd '-' | wc -c`
         fullpath=`echo $file | cut -d'-' -f $dashindex`
         # get how many levels deep this file is
         pos=`echo $fullpath | tr -cd '/' | wc -c`
-        # use the depth to substring the path to get the subject name
-        sub=`echo $fullpath | cut -d'/' -f $((pos + 1))`
-        echo sub = $sub
+        # use the depth to substring the path to get the course name/number
+        course=`echo $fullpath | cut -d'/' -f $((pos + 1))`
+        # echo course = $course
         
-        # Get Department Name and Course Number from sub
-        deptname=`echo $sub | tr -d '0-9'`
-        coursenum=`echo $sub | tr -dc '0-9'`
+        # Get Department Name and Course Number from course
+        deptname=`echo $course | tr -d '0-9'`
+        coursenum=`echo $course | tr -dc '0-9'`
         tmp=`echo $deptname | tr 'a-z' 'A-Z'`
         foldername="$tmp-$coursenum"
-        echo deptname = $deptname
-        echo foldername = $foldername
+        # echo deptname = $deptname
+        # echo foldername = $foldername
 
         # Reconstruct the file name
         # TODO - account for multiple files of the same course
         filename=`find $p -type f -iname "$deptname*" `
-        echo filename = $filename
-        echo p/foldername = $p/$foldername
+        # echo filename = $filename
+        # echo p/foldername = $p/$foldername
         # Check if the corresponding subject folder already exists
-        if [ -d $p/$foldername ]; then
-            echo yes it is a folder
-            echo current location = "$filename"
-            echo goal location = "$p/$foldername"
-            mv "$filename" "$p/$foldername"
-        else 
-            echo folder does not exist
-            mkdir $p/$foldername
-            echo current location = "$filename"
-            echo goal location = "$p/$foldername"
-            mv "$filename" "$p/$foldername"
-        fi
-        echo
+        # if [ -d $p/$foldername ]; then
+            # echo yes it is a folder
+            # echo current location = "$filename"
+            # echo goal location = "$p/$foldername"
+            # mv "$filename" "$p/$foldername"
+        # else 
+            # echo folder does not exist
+            # mkdir $p/$foldername
+            # echo current location = "$filename"
+            # echo goal location = "$p/$foldername"
+            # mv "$filename" "$p/$foldername"
+        # fi
+        # echo
     done
 else 
     echo "no files"
