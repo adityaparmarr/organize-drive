@@ -1,11 +1,17 @@
 #!/bin/zsh
+
 # Check if any files exist in the current directory (excluding hidden files)
 # using find and limiting to depth 1 and excluding hidden and only files
 
 # Workaround for document name containing ' ' (spaces) : 
 #   remove all spaces, and replace "/Users" with temporary delimiter ':' using sed
 #   then, replace the delimiter with new line using tr
-p=./folder
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied"
+    exit 1
+fi
+p=$1
 f=`find ~+/$p -maxdepth 1 -type f ! -name '.*' | tr -d ' '`
 FILES=`echo $f | sed 's,/Users,:,g' | tr ':' '\n'`
 # TODO: find a way to separate the paths (potentially)
