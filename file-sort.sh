@@ -12,15 +12,16 @@ if [ $# -eq 0 ]
     exit 1
 fi
 p=$1
-f=`find ~+/$p -maxdepth 1 -type f ! -name '.*' | tr -d ' '`
+echo $p
+
+f=`find $p -maxdepth 1 -type f ! -name '.*' | tr -d ' '`
 FILES=`echo $f | sed 's,/Users,:,g' | tr ':' '\n'`
-# TODO: find a way to separate the paths (potentially)
+
 if [[ -n $FILES ]]
 then
     echo "YES unsorted files"
     # Loop through all the FILES 
     for file in $FILES; do
-        echo $file
         # get the last dash in the path (avoiding the ones in the parent dir)
         dashindex=`echo $file | tr -cd '-' | wc -c`
         fullpath=`echo $file | cut -d'-' -f $dashindex`
@@ -39,25 +40,27 @@ then
         # echo foldername = $foldername
 
         # Reconstruct the file name
-        # TODO - account for multiple files of the same course
-        filename=`find $p -type f -iname "$deptname*" `
-        # echo filename = $filename
-        # echo p/foldername = $p/$foldername
-        # Check if the corresponding subject folder already exists
-        # if [ -d $p/$foldername ]; then
-            # echo yes it is a folder
-            # echo current location = "$filename"
-            # echo goal location = "$p/$foldername"
-            # mv "$filename" "$p/$foldername"
-        # else 
-            # echo folder does not exist
-            # mkdir $p/$foldername
-            # echo current location = "$filename"
-            # echo goal location = "$p/$foldername"
-            # mv "$filename" "$p/$foldername"
-        # fi
-        # echo
+        filename=`find $p -type f -iname "$deptname $coursenum -*" | head -n 1`
+        if [[ -f $filename ]] 
+        then
+            mv "$filename" "$file"
+        fi
+        echo file = $file
+        # if the folder already exists then simply move the file
+        if [ -d $p/$foldername ]; then
+            echo folder exists
+            echo current location = "$file"
+            echo goal location = "$p/$foldername"
+            mv "$file" "$p/$foldername"
+        # if the folder doesn't exist, create the folder and then move the file
+        else 
+            echo creating folder
+            mkdir $p/$foldername
+            echo current location = "$filename"
+            echo goal location = "$p/$foldername"
+            mv "$file" "$p/$foldername"
+        fi
     done
 else 
-    echo "no files"
+    echo "no files to sort"
 fi
