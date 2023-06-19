@@ -6,7 +6,7 @@ if [[ -d "bruh/TestFolder" ]]; then
     rm -rf bruh/TestFolder
 fi
 mkdir bruh
-mkdir /bruh/TestFolder 
+mkdir bruh/TestFolder 
 cd bruh/TestFolder
 touch "sub 1 - file 0"
 touch "sub 1 - file 1"
